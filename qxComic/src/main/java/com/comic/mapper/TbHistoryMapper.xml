@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.comic.mapper.TbHistoryMapper" >
+  <resultMap id="BaseResultMap" type="com.comic.pojo.TbHistory" >
+    <id column="historyId" property="historyid" jdbcType="INTEGER" />
+    <result column="userId" property="userid" jdbcType="INTEGER" />
+    <result column="comicId" property="comicid" jdbcType="INTEGER" />
+    <result column="historyLocation" property="historylocation" jdbcType="VARCHAR" />
+    <result column="ViewTime" property="viewtime" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    historyId, userId, comicId, historyLocation, ViewTime
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.comic.pojo.TbHistoryExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tb_history
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_history
+    where historyId = #{historyid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tb_history
+    where historyId = #{historyid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.comic.pojo.TbHistoryExample" >
+    delete from tb_history
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.comic.pojo.TbHistory" >
+    insert into tb_history (historyId, userId, comicId, 
+      historyLocation, ViewTime)
+    values (#{historyid,jdbcType=INTEGER}, #{userid,jdbcType=INTEGER}, #{comicid,jdbcType=INTEGER}, 
+      #{historylocation,jdbcType=VARCHAR}, #{viewtime,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.comic.pojo.TbHistory" >
+    insert into tb_history
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="historyid != null" >
+        historyId,
+      </if>
+      <if test="userid != null" >
+        userId,
+      </if>
+      <if test="comicid != null" >
+        comicId,
+      </if>
+      <if test="historylocation != null" >
+        historyLocation,
+      </if>
+      <if test="viewtime != null" >
+        ViewTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="historyid != null" >
+        #{historyid,jdbcType=INTEGER},
+      </if>
+      <if test="userid != null" >
+        #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="comicid != null" >
+        #{comicid,jdbcType=INTEGER},
+      </if>
+      <if test="historylocation != null" >
+        #{historylocation,jdbcType=VARCHAR},
+      </if>
+      <if test="viewtime != null" >
+        #{viewtime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.comic.pojo.TbHistoryExample" resultType="java.lang.Integer" >
+    select count(*) from tb_history
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tb_history
+    <set >
+      <if test="record.historyid != null" >
+        historyId = #{record.historyid,jdbcType=INTEGER},
+      </if>
+      <if test="record.userid != null" >
+        userId = #{record.userid,jdbcType=INTEGER},
+      </if>
+      <if test="record.comicid != null" >
+        comicId = #{record.comicid,jdbcType=INTEGER},
+      </if>
+      <if test="record.historylocation != null" >
+        historyLocation = #{record.historylocation,jdbcType=VARCHAR},
+      </if>
+      <if test="record.viewtime != null" >
+        ViewTime = #{record.viewtime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tb_history
+    set historyId = #{record.historyid,jdbcType=INTEGER},
+      userId = #{record.userid,jdbcType=INTEGER},
+      comicId = #{record.comicid,jdbcType=INTEGER},
+      historyLocation = #{record.historylocation,jdbcType=VARCHAR},
+      ViewTime = #{record.viewtime,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.comic.pojo.TbHistory" >
+    update tb_history
+    <set >
+      <if test="userid != null" >
+        userId = #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="comicid != null" >
+        comicId = #{comicid,jdbcType=INTEGER},
+      </if>
+      <if test="historylocation != null" >
+        historyLocation = #{historylocation,jdbcType=VARCHAR},
+      </if>
+      <if test="viewtime != null" >
+        ViewTime = #{viewtime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where historyId = #{historyid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.comic.pojo.TbHistory" >
+    update tb_history
+    set userId = #{userid,jdbcType=INTEGER},
+      comicId = #{comicid,jdbcType=INTEGER},
+      historyLocation = #{historylocation,jdbcType=VARCHAR},
+      ViewTime = #{viewtime,jdbcType=VARCHAR}
+    where historyId = #{historyid,jdbcType=INTEGER}
+  </update>
+</mapper>

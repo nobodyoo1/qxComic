@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.comic.mapper.TbComicMapper" >
+  <resultMap id="BaseResultMap" type="com.comic.pojo.TbComic" >
+    <id column="comicId" property="comicid" jdbcType="INTEGER" />
+    <result column="comicName" property="comicname" jdbcType="VARCHAR" />
+    <result column="comicDptn" property="comicdptn" jdbcType="VARCHAR" />
+    <result column="comicAuth" property="comicauth" jdbcType="VARCHAR" />
+    <result column="classId" property="classid" jdbcType="INTEGER" />
+    <result column="comicCover" property="comiccover" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    comicId, comicName, comicDptn, comicAuth, classId, comicCover
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.comic.pojo.TbComicExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tb_comic
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_comic
+    where comicId = #{comicid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tb_comic
+    where comicId = #{comicid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.comic.pojo.TbComicExample" >
+    delete from tb_comic
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.comic.pojo.TbComic" >
+    insert into tb_comic (comicId, comicName, comicDptn, 
+      comicAuth, classId, comicCover
+      )
+    values (#{comicid,jdbcType=INTEGER}, #{comicname,jdbcType=VARCHAR}, #{comicdptn,jdbcType=VARCHAR}, 
+      #{comicauth,jdbcType=VARCHAR}, #{classid,jdbcType=INTEGER}, #{comiccover,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.comic.pojo.TbComic" 
+  			useGeneratedKeys="true" keyProperty="comicId">
+    insert into tb_comic
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="comicid != null" >
+        comicId,
+      </if>
+      <if test="comicname != null" >
+        comicName,
+      </if>
+      <if test="comicdptn != null" >
+        comicDptn,
+      </if>
+      <if test="comicauth != null" >
+        comicAuth,
+      </if>
+      <if test="classid != null" >
+        classId,
+      </if>
+      <if test="comiccover != null" >
+        comicCover,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="comicid != null" >
+        #{comicid,jdbcType=INTEGER},
+      </if>
+      <if test="comicname != null" >
+        #{comicname,jdbcType=VARCHAR},
+      </if>
+      <if test="comicdptn != null" >
+        #{comicdptn,jdbcType=VARCHAR},
+      </if>
+      <if test="comicauth != null" >
+        #{comicauth,jdbcType=VARCHAR},
+      </if>
+      <if test="classid != null" >
+        #{classid,jdbcType=INTEGER},
+      </if>
+      <if test="comiccover != null" >
+        #{comiccover,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.comic.pojo.TbComicExample" resultType="java.lang.Integer" >
+    select count(*) from tb_comic
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tb_comic
+    <set >
+      <if test="record.comicid != null" >
+        comicId = #{record.comicid,jdbcType=INTEGER},
+      </if>
+      <if test="record.comicname != null" >
+        comicName = #{record.comicname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.comicdptn != null" >
+        comicDptn = #{record.comicdptn,jdbcType=VARCHAR},
+      </if>
+      <if test="record.comicauth != null" >
+        comicAuth = #{record.comicauth,jdbcType=VARCHAR},
+      </if>
+      <if test="record.classid != null" >
+        classId = #{record.classid,jdbcType=INTEGER},
+      </if>
+      <if test="record.comiccover != null" >
+        comicCover = #{record.comiccover,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tb_comic
+    set comicId = #{record.comicid,jdbcType=INTEGER},
+      comicName = #{record.comicname,jdbcType=VARCHAR},
+      comicDptn = #{record.comicdptn,jdbcType=VARCHAR},
+      comicAuth = #{record.comicauth,jdbcType=VARCHAR},
+      classId = #{record.classid,jdbcType=INTEGER},
+      comicCover = #{record.comiccover,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.comic.pojo.TbComic" >
+    update tb_comic
+    <set >
+      <if test="comicname != null" >
+        comicName = #{comicname,jdbcType=VARCHAR},
+      </if>
+      <if test="comicdptn != null" >
+        comicDptn = #{comicdptn,jdbcType=VARCHAR},
+      </if>
+      <if test="comicauth != null" >
+        comicAuth = #{comicauth,jdbcType=VARCHAR},
+      </if>
+      <if test="classid != null" >
+        classId = #{classid,jdbcType=INTEGER},
+      </if>
+      <if test="comiccover != null" >
+        comicCover = #{comiccover,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where comicId = #{comicid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.comic.pojo.TbComic" >
+    update tb_comic
+    set comicName = #{comicname,jdbcType=VARCHAR},
+      comicDptn = #{comicdptn,jdbcType=VARCHAR},
+      comicAuth = #{comicauth,jdbcType=VARCHAR},
+      classId = #{classid,jdbcType=INTEGER},
+      comicCover = #{comiccover,jdbcType=VARCHAR}
+    where comicId = #{comicid,jdbcType=INTEGER}
+  </update>
+</mapper>

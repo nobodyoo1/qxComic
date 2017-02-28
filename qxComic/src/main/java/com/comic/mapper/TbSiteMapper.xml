@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.comic.mapper.TbSiteMapper" >
+  <resultMap id="BaseResultMap" type="com.comic.pojo.TbSite" >
+    <id column="siteId" property="siteid" jdbcType="INTEGER" />
+    <result column="siteDomain" property="sitedomain" jdbcType="VARCHAR" />
+    <result column="siteName" property="sitename" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    siteId, siteDomain, siteName
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.comic.pojo.TbSiteExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tb_site
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_site
+    where siteId = #{siteid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tb_site
+    where siteId = #{siteid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.comic.pojo.TbSiteExample" >
+    delete from tb_site
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.comic.pojo.TbSite" >
+    insert into tb_site (siteId, siteDomain, siteName
+      )
+    values (#{siteid,jdbcType=INTEGER}, #{sitedomain,jdbcType=VARCHAR}, #{sitename,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.comic.pojo.TbSite" >
+    insert into tb_site
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="siteid != null" >
+        siteId,
+      </if>
+      <if test="sitedomain != null" >
+        siteDomain,
+      </if>
+      <if test="sitename != null" >
+        siteName,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="siteid != null" >
+        #{siteid,jdbcType=INTEGER},
+      </if>
+      <if test="sitedomain != null" >
+        #{sitedomain,jdbcType=VARCHAR},
+      </if>
+      <if test="sitename != null" >
+        #{sitename,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.comic.pojo.TbSiteExample" resultType="java.lang.Integer" >
+    select count(*) from tb_site
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tb_site
+    <set >
+      <if test="record.siteid != null" >
+        siteId = #{record.siteid,jdbcType=INTEGER},
+      </if>
+      <if test="record.sitedomain != null" >
+        siteDomain = #{record.sitedomain,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sitename != null" >
+        siteName = #{record.sitename,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tb_site
+    set siteId = #{record.siteid,jdbcType=INTEGER},
+      siteDomain = #{record.sitedomain,jdbcType=VARCHAR},
+      siteName = #{record.sitename,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.comic.pojo.TbSite" >
+    update tb_site
+    <set >
+      <if test="sitedomain != null" >
+        siteDomain = #{sitedomain,jdbcType=VARCHAR},
+      </if>
+      <if test="sitename != null" >
+        siteName = #{sitename,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where siteId = #{siteid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.comic.pojo.TbSite" >
+    update tb_site
+    set siteDomain = #{sitedomain,jdbcType=VARCHAR},
+      siteName = #{sitename,jdbcType=VARCHAR}
+    where siteId = #{siteid,jdbcType=INTEGER}
+  </update>
+</mapper>
